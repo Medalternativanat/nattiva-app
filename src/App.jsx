@@ -2,27 +2,25 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Toaster } from 'sonner'
 
-// ⚠️ removido type Language
-import { detectLanguage } from '@/lib/i18n'
-import { BottomNav } from '@/components/BottomNav'
+// 🔥 IMPORTS SEM @ (corrigido)
+import { detectLanguage } from '../lib/i18n'
+import { BottomNav } from '../components/BottomNav'
 
-import HomePage from '@/pages/HomePage'
-import ResultPage from '@/pages/ResultPage'
-import QuizPage from '@/pages/QuizPage'
-import WaterPage from '@/pages/WaterPage'
-import CommunityPage from '@/pages/CommunityPage'
-import StepsPage from '@/pages/StepsPage'
-import GamesPage from '@/pages/GamesPage'
+import HomePage from '../pages/HomePage'
+import ResultPage from '../pages/ResultPage'
+import QuizPage from '../pages/QuizPage'
+import WaterPage from '../pages/WaterPage'
+import CommunityPage from '../pages/CommunityPage'
+import StepsPage from '../pages/StepsPage'
+import GamesPage from '../pages/GamesPage'
 
 function AppContent() {
-  const [lang, setLang] = useState('pt') // ⚠️ removido tipo
-
+  const [lang, setLang] = useState('pt')
   const location = useLocation()
 
   useEffect(() => {
     const detected = detectLanguage()
     const saved = localStorage.getItem('nattiva_lang')
-
     setLang(saved || detected)
   }, [])
 
@@ -47,12 +45,6 @@ function AppContent() {
   )
 }
 
-export function App() {
+export default function App() {
   return <AppContent />
 }
-
-export default App
-  return <AppContent />
-}
-
-export default App
