@@ -29,6 +29,11 @@ export default function HomePage() {
           onChange={(e) => setQuery(e.target.value)}
           style={{ padding: 10, width: 300 }}
         />
+
+        {/* 👇 BOTÃO IMPORTANTE */}
+        <button type="submit" style={{ marginLeft: 10 }}>
+          Buscar
+        </button>
       </form>
 
       {resposta && (
