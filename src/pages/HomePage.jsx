@@ -80,8 +80,22 @@ export default function HomePage() {
           SUGESTÕES
         </p>
 
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center" }}>
-          {["Ansiedade", "Sono", "Imunidade", "Energia", "Dor de estômago", "Queda de cabelo"].map((item) => (
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 10,
+            justifyContent: "center"
+          }}
+        >
+          {[
+            "Ansiedade",
+            "Sono",
+            "Imunidade",
+            "Energia",
+            "Dor de estômago",
+            "Queda de cabelo"
+          ].map((item) => (
             <button
               key={item}
               onClick={() => setQuery(item)}
@@ -98,10 +112,6 @@ export default function HomePage() {
           ))}
         </div>
       </div>
-    </div>
-  )
-}
-      )}
     </div>
   )
 }
