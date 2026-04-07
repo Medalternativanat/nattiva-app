@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, User } from "lucide-react";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -18,9 +17,9 @@ export default function HomePage() {
       <div className="w-full flex justify-end mb-4">
         <button
           onClick={() => navigate("/perfil")}
-          className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"
+          className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500"
         >
-          <User className="w-5 h-5 text-gray-500" />
+          👤
         </button>
       </div>
 
@@ -30,10 +29,10 @@ export default function HomePage() {
         <img
           src="https://pub-c0bfb119504542e0b2e6ebc8f6b3b1df.r2.dev/user-uploads/user_35LsRErkdpSKkn25Ksk8XrqUFMg/7b9420ff-7dd7-4e92-9ea4-42400cad68ae.png"
           alt="Nattiva"
-          className="w-[150px] md:w-[190px] object-contain"
+          className="w-[160px] md:w-[200px] object-contain"
         />
 
-        <p className="text-[15px] font-semibold text-gray-700 text-center mt-1 leading-tight">
+        <p className="text-[16px] font-semibold text-gray-700 text-center mt-1 leading-tight">
           Saúde Natural & Sabedoria Ancestral
         </p>
 
@@ -42,17 +41,13 @@ export default function HomePage() {
       {/* BUSCA */}
       <div className="w-full max-w-md mt-6">
 
-        <div className="relative">
-          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="O que você quer cuidar hoje?"
-            className="w-full pl-12 pr-4 py-4 rounded-full border border-gray-200 bg-white text-center text-[15px] shadow-sm focus:outline-none"
-          />
-        </div>
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="O que você quer cuidar hoje?"
+          className="w-full px-4 py-4 rounded-full border border-gray-200 bg-white text-center text-[15px] shadow-sm focus:outline-none"
+        />
 
         <button
           onClick={() => handleSearch(query)}
