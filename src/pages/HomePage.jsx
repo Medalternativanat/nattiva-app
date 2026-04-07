@@ -1,51 +1,78 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { Search, User } from "lucide-react"
 
 export default function HomePage() {
   const navigate = useNavigate()
   const [query, setQuery] = useState("")
 
-  function handleSearch(q) {
-    if (!q || q.trim() === "") return
-    const url = "/resultado?q=" + encodeURIComponent(q)
-    navigate(url)
+  const handleSearch = (q) => {
+    if (!q.trim()) return
+    navigate(/resultado?q=${encodeURIComponent(q)})
   }
 
   return (
-    <div style={styles.page}>
-      <div style={styles.centerBlock}>
+    <div className="w-full min-h-screen bg-[#f7f9f6] flex flex-col items-center px-5 pt-6 pb-24">
 
-        {/* LOGO */}
+      {/* PERFIL */}
+      <div className="w-full flex justify-end mb-4">
+        <button
+          onClick={() => navigate("/perfil")}
+          className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"
+        >
+          <User className="w-5 h-5 text-gray-500" />
+        </button>
+      </div>
+
+      {/* LOGO + TEXTO (AJUSTADO) */}
+      <div className="flex flex-col items-center mt-4 mb-2">
+
         <img
           src="https://pub-c0bfb119504542e0b2e6ebc8f6b3b1df.r2.dev/user-uploads/user_35LsRErkdpSKkn25Ksk8XrqUFMg/7b9420ff-7dd7-4e92-9ea4-42400cad68ae.png"
           alt="Nattiva"
-          style={styles.logo}
+          className="w-[140px] md:w-[180px] object-contain"
         />
 
-        {/* FRASE */}
-        <p style={styles.subtitle}>
+        {/* TEXTO MAIS PRÓXIMO DA LOGO */}
+        <p className="text-[15px] font-semibold text-gray-700 text-center mt-1 leading-tight">
           Saúde Natural & Sabedoria Ancestral
         </p>
 
-        {/* BUSCA */}
-        <input
-          type="text"
-          placeholder="O que você quer cuidar hoje?"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          style={styles.input}
-        />
+      </div>
 
-        {/* BOTÃO */}
+      {/* BUSCA */}
+      <div className="w-full max-w-md mt-6">
+
+        <div className="relative">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="O que você quer cuidar hoje?"
+            className="w-full pl-12 pr-4 py-4 rounded-full border border-gray-200 bg-white text-center text-[15px] shadow-sm focus:outline-none"
+          />
+        </div>
+
         <button
           onClick={() => handleSearch(query)}
-          style={styles.button}
+          className="w-full mt-4 py-4 rounded-full bg-green-700 text-white font-semibold text-[16px]"
         >
           Pesquisar
         </button>
 
-        {/* SUGESTÕES */}
-        <div style={styles.suggestions}>
+      </div>
+
+      {/* SUGESTÕES */}
+      <div className="mt-8 w-full max-w-md text-center">
+
+        <p className="text-[11px] text-gray-400 mb-3 tracking-wide">
+          SUGESTÕES
+        </p>
+
+        <div className="flex flex-wrap justify-center gap-2">
+
           {[
             "Ansiedade",
             "Sono",
@@ -57,84 +84,15 @@ export default function HomePage() {
             <button
               key={item}
               onClick={() => handleSearch(item)}
-              style={styles.chip}
+              className="px-4 py-2 rounded-full bg-green-100 text-green-800 text-sm font-medium"
             >
               {item}
             </button>
           ))}
-        </div>
 
+        </div>
       </div>
+
     </div>
   )
-}
-
-const styles = {
-  page: {
-    height: "100vh",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    background: "#f7f9f6",
-  },
-
-  centerBlock: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: "10px", // 🔥 diminui espaçamento geral
-    width: "100%",
-    maxWidth: "420px",
-    padding: "20px",
-  },
-
-  logo: {
-    width: "270px", // 🔥 maior (mais presença)
-    marginBottom: "5px", // 🔥 aproxima da frase
-  },
-
-  subtitle: {
-    fontSize: "16px",
-    color: "#555",
-    fontWeight: "600", // 🔥 mais forte
-    marginBottom: "15px", // 🔥 aproxima da busca
-  },
-
-  input: {
-    width: "100%",
-    padding: "16px",
-    borderRadius: "30px",
-    border: "1px solid #ddd",
-    textAlign: "center",
-    fontSize: "15px",
-  },
-
-  button: {
-    width: "100%",
-    padding: "14px",
-    borderRadius: "30px",
-    border: "none",
-    background: "#2e7d32",
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: "15px",
-    cursor: "pointer",
-  },
-
-  suggestions: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    gap: "10px",
-    marginTop: "10px",
-  },
-
-  chip: {
-    padding: "8px 14px",
-    borderRadius: "20px",
-    border: "none",
-    background: "#e8f5e9",
-    fontSize: "13px",
-    cursor: "pointer",
-  },
 }
