@@ -12,22 +12,23 @@ export default function HomePage() {
   }
 
   return (
-    <div style={styles.container}>
+    <div style={styles.page}>
 
-      {/* LOGO */}
-      <img
-        src="https://pub-c0bfb119504542e0b2e6ebc8f6b3b1df.r2.dev/user-uploads/user_35LsRErkdpSKkn25Ksk8XrqUFMg/7b9420ff-7dd7-4e92-9ea4-42400cad68ae.png"
-        alt="Nattiva"
-        style={styles.logo}
-      />
+      <div style={styles.centerBlock}>
 
-      {/* TEXTO */}
-      <p style={styles.subtitle}>
-        Saúde Natural & Sabedoria Ancestral
-      </p>
+        {/* LOGO */}
+        <img
+          src="https://pub-c0bfb119504542e0b2e6ebc8f6b3b1df.r2.dev/user-uploads/user_35LsRErkdpSKkn25Ksk8XrqUFMg/7b9420ff-7dd7-4e92-9ea4-42400cad68ae.png"
+          alt="Nattiva"
+          style={styles.logo}
+        />
 
-      {/* BUSCA */}
-      <div style={styles.searchWrapper}>
+        {/* FRASE */}
+        <p style={styles.subtitle}>
+          Saúde Natural & Sabedoria Ancestral
+        </p>
+
+        {/* BUSCA */}
         <input
           type="text"
           placeholder="O que você quer cuidar hoje?"
@@ -36,19 +37,16 @@ export default function HomePage() {
           style={styles.input}
         />
 
+        {/* BOTÃO */}
         <button
           onClick={() => handleSearch(query)}
           style={styles.button}
         >
           Pesquisar
         </button>
-      </div>
 
-      {/* SUGESTÕES */}
-      <div style={styles.suggestions}>
-        <p style={styles.suggestionsTitle}>SUGESTÕES</p>
-
-        <div style={styles.chips}>
+        {/* SUGESTÕES */}
+        <div style={styles.suggestions}>
           {[
             "Ansiedade",
             "Sono",
@@ -66,6 +64,7 @@ export default function HomePage() {
             </button>
           ))}
         </div>
+
       </div>
 
     </div>
@@ -73,35 +72,32 @@ export default function HomePage() {
 }
 
 const styles = {
-  container: {
-    minHeight: "100vh",
+  page: {
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    background: "#f7f9f6",
+  },
+
+  centerBlock: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#f7f9f6",
+    gap: "18px",
+    width: "100%",
+    maxWidth: "420px",
     padding: "20px",
-    textAlign: "center"
   },
 
   logo: {
-    width: "180px", // 🔥 maior (corrigido)
-    marginBottom: "25px"
+    width: "240px", // 🔥 GRANDE estilo Google
+    objectFit: "contain",
   },
 
   subtitle: {
-    fontSize: "16px", // 🔥 maior
-    color: "#555",
-    marginBottom: "30px",
-    fontWeight: "500"
-  },
-
-  searchWrapper: {
-    width: "100%",
-    maxWidth: "420px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center" // 🔥 GARANTE CENTRALIZAÇÃO
+    fontSize: "14px",
+    color: "#666",
   },
 
   input: {
@@ -109,49 +105,36 @@ const styles = {
     padding: "16px",
     borderRadius: "30px",
     border: "1px solid #ddd",
-    marginBottom: "12px",
-    fontSize: "15px",
     textAlign: "center",
-    boxSizing: "border-box"
+    fontSize: "15px",
   },
 
   button: {
-    width: "100%", // 🔥 agora casa perfeitamente com input
-    padding: "16px",
+    width: "100%",
+    padding: "14px",
     borderRadius: "30px",
     border: "none",
-    backgroundColor: "#2e7d32",
+    background: "#2e7d32",
     color: "#fff",
     fontWeight: "bold",
-    fontSize: "16px",
-    cursor: "pointer"
+    fontSize: "15px",
+    cursor: "pointer",
   },
 
   suggestions: {
-    marginTop: "35px"
-  },
-
-  suggestionsTitle: {
-    fontSize: "12px",
-    color: "#888",
-    marginBottom: "12px",
-    letterSpacing: "1px"
-  },
-
-  chips: {
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "center",
     gap: "10px",
-    maxWidth: "420px"
+    marginTop: "10px",
   },
 
   chip: {
-    padding: "9px 16px",
+    padding: "8px 14px",
     borderRadius: "20px",
     border: "none",
-    backgroundColor: "#e8f5e9",
-    fontSize: "14px",
-    cursor: "pointer"
-  }
+    background: "#e8f5e9",
+    fontSize: "13px",
+    cursor: "pointer",
+  },
 }
