@@ -12,7 +12,7 @@ export default function ResultPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch(/api/search?q=${query})
+        const res = await fetch(`/api/search?q=${query}`)
         const data = await res.json()
         setResult(data.result)
       } catch (error) {
