@@ -13,7 +13,6 @@ export default function HomePage() {
 
   return (
     <div style={styles.page}>
-
       <div style={styles.centerBlock}>
 
         {/* LOGO */}
@@ -66,7 +65,6 @@ export default function HomePage() {
         </div>
 
       </div>
-
     </div>
   )
 }
@@ -84,20 +82,22 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    gap: "18px",
+    gap: "10px", // 🔥 diminui espaçamento geral
     width: "100%",
     maxWidth: "420px",
     padding: "20px",
   },
 
   logo: {
-    width: "240px", // 🔥 GRANDE estilo Google
-    objectFit: "contain",
+    width: "270px", // 🔥 maior (mais presença)
+    marginBottom: "5px", // 🔥 aproxima da frase
   },
 
   subtitle: {
-    fontSize: "14px",
-    color: "#666",
+    fontSize: "16px",
+    color: "#555",
+    fontWeight: "600", // 🔥 mais forte
+    marginBottom: "15px", // 🔥 aproxima da busca
   },
 
   input: {
