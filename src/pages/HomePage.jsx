@@ -27,17 +27,17 @@ export default function HomePage() {
         src="https://pub-c0bfb119504542e0b2e6ebc8f6b3b1df.r2.dev/user-uploads/user_35LsRErkdpSKkn25Ksk8XrqUFMg/7b9420ff-7dd7-4e92-9ea4-42400cad68ae.png"
         alt="Nattiva"
         style={{
-          width: "180px",
-          marginBottom: "10px"
+          width: "220px",
+          marginBottom: "8px"
         }}
       />
 
       {/* TEXTO */}
       <p style={{
-        fontSize: "16px",
+        fontSize: "17px",
         fontWeight: "600",
         color: "#444",
-        marginBottom: "25px"
+        marginBottom: "28px"
       }}>
         Saúde Natural & Sabedoria Ancestral
       </p>
@@ -50,12 +50,13 @@ export default function HomePage() {
         placeholder="O que você quer cuidar hoje?"
         style={{
           width: "100%",
-          maxWidth: "400px",
-          padding: "14px",
+          maxWidth: "420px",
+          padding: "15px",
           borderRadius: "30px",
           border: "1px solid #ddd",
           textAlign: "center",
-          marginBottom: "15px"
+          marginBottom: "15px",
+          fontSize: "15px"
         }}
       />
 
@@ -64,13 +65,14 @@ export default function HomePage() {
         onClick={() => handleSearch(query)}
         style={{
           width: "100%",
-          maxWidth: "400px",
-          padding: "14px",
+          maxWidth: "420px",
+          padding: "15px",
           borderRadius: "30px",
           border: "none",
           background: "#2e7d32",
           color: "#fff",
           fontWeight: "600",
+          fontSize: "16px",
           cursor: "pointer"
         }}
       >
@@ -78,11 +80,14 @@ export default function HomePage() {
       </button>
 
       {/* SUGESTÕES */}
-      <div style={{ marginTop: "25px" }}>
+      <div style={{ marginTop: "35px" }}>
+
         <p style={{
-          fontSize: "12px",
-          color: "#888",
-          marginBottom: "10px"
+          fontSize: "13px",
+          fontWeight: "700",
+          color: "#666",
+          marginBottom: "16px",
+          letterSpacing: "1px"
         }}>
           SUGESTÕES
         </p>
@@ -91,26 +96,28 @@ export default function HomePage() {
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "center",
-          gap: "8px"
+          gap: "10px",
+          marginTop: "10px"
         }}>
-          {["Ansiedade","Sono","Imunidade","Energia","Dor de estômago","Queda de cabelo"].map((item) => (
-            <button
-              key={item}
-              onClick={() => handleSearch(item)}
-              style={{
-                padding: "8px 12px",
-                borderRadius: "20px",
-                border: "none",
-                background: "#e8f5e9",
-                cursor: "pointer"
-              }}
-            >
-              {item}
-            </button>
-          ))}
+          <button onClick={() => handleSearch("Ansiedade")} style={chip}>Ansiedade</button>
+          <button onClick={() => handleSearch("Sono")} style={chip}>Sono</button>
+          <button onClick={() => handleSearch("Imunidade")} style={chip}>Imunidade</button>
+          <button onClick={() => handleSearch("Energia")} style={chip}>Energia</button>
+          <button onClick={() => handleSearch("Dor de estômago")} style={chip}>Dor de estômago</button>
+          <button onClick={() => handleSearch("Queda de cabelo")} style={chip}>Queda de cabelo</button>
         </div>
+
       </div>
 
     </div>
   );
 }
+
+const chip = {
+  padding: "8px 14px",
+  borderRadius: "20px",
+  border: "none",
+  background: "#e8f5e9",
+  fontSize: "14px",
+  cursor: "pointer"
+};
