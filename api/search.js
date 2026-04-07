@@ -1,109 +1,51 @@
 export default async function handler(req, res) {
-  const { query } = req.body
+  const { q } = req.query;
 
-  if (!query) {
-    return res.status(400).json({ erro: "Query vazia" })
+  if (!q) {
+    return res.status(400).json({ error: "Sem busca" });
   }
 
-  const q = query.toLowerCase()
+  const prompt = `
+Você é um especialista em saúde natural, sabedoria ancestral e medicina tradicional.
 
-  let resposta = ""
+Responda de forma prática, clara e confiável.
 
-  if (q.includes("ansiedade")) {
-    resposta = `
-🧠 POSSÍVEIS CAUSAS:
-- Estresse crônico
-- Excesso de estímulos (celular, trabalho)
-- Falta de magnésio
-- Desequilíbrio do sono
+Para o problema: "${q}"
 
-🌿 PROTOCOLO NATURAL:
-- Chá de camomila (calmante leve)
-- Valeriana (ajuda no sono)
-- Lavanda (relaxante natural)
+Forneça:
 
-🍵 RECEITA:
-Chá calmante:
-- 1 colher de camomila
-- 1 colher de erva-doce
-- 200ml de água quente
-Deixar 10 min e tomar à noite
+1. Chás recomendados (com preparo simples)
+2. Alimentos que ajudam
+3. Práticas naturais
+4. Cuidados importantes
 
-⚠️ CONTRAINDICAÇÕES:
-- Valeriana pode causar sonolência forte
-- Evitar misturar com álcool
-- Gestantes devem consultar médico
+IMPORTANTE:
+- Priorize conhecimento ancestral (ervas, raízes, práticas naturais)
+- Evite linguagem médica complexa
+- Seja direto e útil
+`;
 
-💡 DICA EXTRA:
-Respiração 4-4-4 (inspirar 4s, segurar 4s, soltar 4s)
-`
+  try {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": Bearer ${process.env.OPENAI_API_KEY}
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [{ role: "user", content: prompt }],
+        temperature: 0.7
+      })
+    });
+
+    const data = await response.json();
+
+    const text = data.choices[0].message.content;
+
+    res.status(200).json({ result: text });
+
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao buscar resposta" });
   }
-
-  else if (q.includes("gases") || q.includes("inchaço")) {
-    resposta = `
-🧠 POSSÍVEIS CAUSAS:
-- Má digestão
-- Excesso de açúcar
-- Intolerância alimentar
-
-🌿 PROTOCOLO NATURAL:
-- Hortelã
-- Gengibre
-- Erva-doce
-
-🍵 RECEITA:
-Chá digestivo:
-- 1 pedaço de gengibre
-- 1 colher de hortelã
-Ferver por 10 min
-
-⚠️ CONTRAINDICAÇÕES:
-- Gengibre em excesso pode irritar o estômago
-
-💡 DICA EXTRA:
-Evitar comer rápido
-`
-  }
-
-  else if (q.includes("imunidade")) {
-    resposta = `
-🧠 POSSÍVEIS CAUSAS:
-- Baixa ingestão de vitaminas
-- Estresse
-- Falta de sono
-
-🌿 PROTOCOLO NATURAL:
-- Alho
-- Gengibre
-- Cúrcuma
-- Limão
-
-🍵 RECEITA:
-Shot matinal:
-- Suco de 1 limão
-- 1 colher de cúrcuma
-- 1 pitada de pimenta preta
-
-⚠️ CONTRAINDICAÇÕES:
-- Problemas gástricos devem evitar excesso de cúrcuma
-
-💡 DICA EXTRA:
-Tomar sol diariamente
-`
-  }
-
-  else {
-    resposta = `
-🔎 Buscando recomendação para: "${query}"
-
-🌿 Sugestão geral:
-- Melhorar alimentação
-- Reduzir industrializados
-- Usar ervas naturais conforme sintomas
-
-💡 Em breve respostas mais específicas
-`
-  }
-
-  res.status(200).json({ resposta })
 }
