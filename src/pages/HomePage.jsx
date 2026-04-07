@@ -22,20 +22,20 @@ export default function HomePage() {
       padding: "20px"
     }}>
 
-      {/* LOGO (AJUSTADA PROFISSIONAL) */}
+      {/* LOGO AJUSTADA (SEM CORTAR NATTIVA) */}
       <div style={{
-        width: "160px",
-        height: "160px",
+        width: "170px",
+        height: "170px",
         overflow: "hidden",
-        marginBottom: "4px"
+        marginBottom: "6px"
       }}>
         <img
           src="https://pub-c0bfb119504542e0b2e6ebc8f6b3b1df.r2.dev/user-uploads/user_35LsRErkdpSKkn25Ksk8XrqUFMg/7b9420ff-7dd7-4e92-9ea4-42400cad68ae.png"
           alt="Nattiva"
           style={{
-            width: "140%",
-            marginLeft: "-20%",
-            marginTop: "-10%"
+            width: "125%",
+            marginTop: "-5%",
+            marginLeft: "-12%"
           }}
         />
       </div>
