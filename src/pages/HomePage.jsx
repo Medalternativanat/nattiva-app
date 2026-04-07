@@ -22,22 +22,30 @@ export default function HomePage() {
       padding: "20px"
     }}>
 
-      {/* LOGO */}
-      <img
-        src="https://pub-c0bfb119504542e0b2e6ebc8f6b3b1df.r2.dev/user-uploads/user_35LsRErkdpSKkn25Ksk8XrqUFMg/7b9420ff-7dd7-4e92-9ea4-42400cad68ae.png"
-        alt="Nattiva"
-        style={{
-          width: "220px",
-          marginBottom: "8px"
-        }}
-      />
+      {/* LOGO (AJUSTADA PROFISSIONAL) */}
+      <div style={{
+        width: "160px",
+        height: "160px",
+        overflow: "hidden",
+        marginBottom: "4px"
+      }}>
+        <img
+          src="https://pub-c0bfb119504542e0b2e6ebc8f6b3b1df.r2.dev/user-uploads/user_35LsRErkdpSKkn25Ksk8XrqUFMg/7b9420ff-7dd7-4e92-9ea4-42400cad68ae.png"
+          alt="Nattiva"
+          style={{
+            width: "140%",
+            marginLeft: "-20%",
+            marginTop: "-10%"
+          }}
+        />
+      </div>
 
       {/* TEXTO */}
       <p style={{
-        fontSize: "17px",
-        fontWeight: "600",
-        color: "#444",
-        marginBottom: "28px"
+        fontSize: "18px",
+        fontWeight: "700",
+        color: "#333",
+        marginBottom: "26px"
       }}>
         Saúde Natural & Sabedoria Ancestral
       </p>
@@ -51,11 +59,11 @@ export default function HomePage() {
         style={{
           width: "100%",
           maxWidth: "420px",
-          padding: "15px",
+          padding: "16px",
           borderRadius: "30px",
           border: "1px solid #ddd",
           textAlign: "center",
-          marginBottom: "15px",
+          marginBottom: "14px",
           fontSize: "15px"
         }}
       />
@@ -66,12 +74,12 @@ export default function HomePage() {
         style={{
           width: "100%",
           maxWidth: "420px",
-          padding: "15px",
+          padding: "16px",
           borderRadius: "30px",
           border: "none",
           background: "#2e7d32",
           color: "#fff",
-          fontWeight: "600",
+          fontWeight: "700",
           fontSize: "16px",
           cursor: "pointer"
         }}
@@ -80,14 +88,14 @@ export default function HomePage() {
       </button>
 
       {/* SUGESTÕES */}
-      <div style={{ marginTop: "35px" }}>
+      <div style={{ marginTop: "40px" }}>
 
         <p style={{
           fontSize: "13px",
           fontWeight: "700",
-          color: "#666",
-          marginBottom: "16px",
-          letterSpacing: "1px"
+          color: "#555",
+          marginBottom: "18px",
+          letterSpacing: "1.5px"
         }}>
           SUGESTÕES
         </p>
@@ -96,8 +104,7 @@ export default function HomePage() {
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "center",
-          gap: "10px",
-          marginTop: "10px"
+          gap: "10px"
         }}>
           <button onClick={() => handleSearch("Ansiedade")} style={chip}>Ansiedade</button>
           <button onClick={() => handleSearch("Sono")} style={chip}>Sono</button>
