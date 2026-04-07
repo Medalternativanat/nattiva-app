@@ -1,14 +1,14 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { Search, User } from "lucide-react"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Search, User } from "lucide-react";
 
 export default function HomePage() {
-  const navigate = useNavigate()
-  const [query, setQuery] = useState("")
+  const navigate = useNavigate();
+  const [query, setQuery] = useState("");
 
-  const handleSearch = (q) => {
-    if (!q.trim()) return
-    navigate(/resultado?q=${encodeURIComponent(q)})
+  function handleSearch(q) {
+    if (!q || !q.trim()) return;
+    navigate("/resultado?q=" + encodeURIComponent(q));
   }
 
   return (
@@ -24,16 +24,15 @@ export default function HomePage() {
         </button>
       </div>
 
-      {/* LOGO + TEXTO (AJUSTADO) */}
+      {/* LOGO + TEXTO */}
       <div className="flex flex-col items-center mt-4 mb-2">
 
         <img
           src="https://pub-c0bfb119504542e0b2e6ebc8f6b3b1df.r2.dev/user-uploads/user_35LsRErkdpSKkn25Ksk8XrqUFMg/7b9420ff-7dd7-4e92-9ea4-42400cad68ae.png"
           alt="Nattiva"
-          className="w-[140px] md:w-[180px] object-contain"
+          className="w-[150px] md:w-[190px] object-contain"
         />
 
-        {/* TEXTO MAIS PRÓXIMO DA LOGO */}
         <p className="text-[15px] font-semibold text-gray-700 text-center mt-1 leading-tight">
           Saúde Natural & Sabedoria Ancestral
         </p>
@@ -44,7 +43,7 @@ export default function HomePage() {
       <div className="w-full max-w-md mt-6">
 
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
 
           <input
             type="text"
@@ -73,26 +72,16 @@ export default function HomePage() {
 
         <div className="flex flex-wrap justify-center gap-2">
 
-          {[
-            "Ansiedade",
-            "Sono",
-            "Imunidade",
-            "Energia",
-            "Dor de estômago",
-            "Queda de cabelo"
-          ].map((item) => (
-            <button
-              key={item}
-              onClick={() => handleSearch(item)}
-              className="px-4 py-2 rounded-full bg-green-100 text-green-800 text-sm font-medium"
-            >
-              {item}
-            </button>
-          ))}
+          <button onClick={() => handleSearch("Ansiedade")} className="px-4 py-2 rounded-full bg-green-100 text-green-800 text-sm">Ansiedade</button>
+          <button onClick={() => handleSearch("Sono")} className="px-4 py-2 rounded-full bg-green-100 text-green-800 text-sm">Sono</button>
+          <button onClick={() => handleSearch("Imunidade")} className="px-4 py-2 rounded-full bg-green-100 text-green-800 text-sm">Imunidade</button>
+          <button onClick={() => handleSearch("Energia")} className="px-4 py-2 rounded-full bg-green-100 text-green-800 text-sm">Energia</button>
+          <button onClick={() => handleSearch("Dor de estômago")} className="px-4 py-2 rounded-full bg-green-100 text-green-800 text-sm">Dor de estômago</button>
+          <button onClick={() => handleSearch("Queda de cabelo")} className="px-4 py-2 rounded-full bg-green-100 text-green-800 text-sm">Queda de cabelo</button>
 
         </div>
       </div>
 
     </div>
-  )
+  );
 }
