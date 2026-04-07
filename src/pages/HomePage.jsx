@@ -22,23 +22,15 @@ export default function HomePage() {
       padding: "20px"
     }}>
 
-      {/* LOGO AJUSTADA (SEM CORTAR NATTIVA) */}
-      <div style={{
-        width: "170px",
-        height: "170px",
-        overflow: "hidden",
-        marginBottom: "6px"
-      }}>
-        <img
-          src="https://pub-c0bfb119504542e0b2e6ebc8f6b3b1df.r2.dev/user-uploads/user_35LsRErkdpSKkn25Ksk8XrqUFMg/7b9420ff-7dd7-4e92-9ea4-42400cad68ae.png"
-          alt="Nattiva"
-          style={{
-            width: "125%",
-            marginTop: "-5%",
-            marginLeft: "-12%"
-          }}
-        />
-      </div>
+      {/* LOGO GRANDE SEM CORTAR */}
+      <img
+        src="https://pub-c0bfb119504542e0b2e6ebc8f6b3b1df.r2.dev/user-uploads/user_35LsRErkdpSKkn25Ksk8XrqUFMg/7b9420ff-7dd7-4e92-9ea4-42400cad68ae.png"
+        alt="Nattiva"
+        style={{
+          width: "190px",
+          marginBottom: "6px"
+        }}
+      />
 
       {/* TEXTO */}
       <p style={{
