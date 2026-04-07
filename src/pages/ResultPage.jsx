@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function ResultPage() {
   const location = useLocation();
@@ -7,6 +8,25 @@ export default function ResultPage() {
   const params = new URLSearchParams(location.search);
   const query = params.get("q");
 
+  const [loading, setLoading] = useState(true);
+  const [result, setResult] = useState("");
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch(/api/search?q=${query});
+        const data = await res.json();
+        setResult(data.result);
+      } catch (err) {
+        setResult("Erro ao buscar resposta.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, [query]);
+
   return (
     <div style={{
       padding: "20px",
@@ -14,7 +34,6 @@ export default function ResultPage() {
       margin: "0 auto"
     }}>
 
-      {/* VOLTAR */}
       <button
         onClick={() => navigate("/")}
         style={{
@@ -29,7 +48,6 @@ export default function ResultPage() {
         ← Voltar
       </button>
 
-      {/* PERGUNTA */}
       <h2 style={{
         fontSize: "20px",
         marginBottom: "20px"
@@ -37,27 +55,14 @@ export default function ResultPage() {
         Resultado para: <strong>{query}</strong>
       </h2>
 
-      {/* RESPOSTA SIMPLES (TEMPORÁRIA) */}
       <div style={{
         background: "#f1f8f4",
         padding: "20px",
         borderRadius: "16px",
-        lineHeight: "1.6"
+        lineHeight: "1.6",
+        whiteSpace: "pre-line"
       }}>
-        <p>
-          Aqui vão aparecer recomendações naturais para <strong>{query}</strong>.
-        </p>
-
-        <p>
-          Em breve, você verá sugestões como:
-        </p>
-
-        <ul>
-          <li>🌿 Chás recomendados</li>
-          <li>🥗 Alimentos que ajudam</li>
-          <li>🧘 Práticas naturais</li>
-          <li>⚠️ Cuidados importantes</li>
-        </ul>
+        {loading ? "Buscando sabedoria ancestral..." : result}
       </div>
 
     </div>
