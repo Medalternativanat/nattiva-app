@@ -13,7 +13,7 @@ export default function HomePage() {
 
   return (
     <div style={styles.container}>
-      
+
       {/* LOGO */}
       <img
         src="https://pub-c0bfb119504542e0b2e6ebc8f6b3b1df.r2.dev/user-uploads/user_35LsRErkdpSKkn25Ksk8XrqUFMg/7b9420ff-7dd7-4e92-9ea4-42400cad68ae.png"
@@ -27,7 +27,7 @@ export default function HomePage() {
       </p>
 
       {/* BUSCA */}
-      <div style={styles.searchContainer}>
+      <div style={styles.searchWrapper}>
         <input
           type="text"
           placeholder="O que você quer cuidar hoje?"
@@ -85,51 +85,57 @@ const styles = {
   },
 
   logo: {
-    width: "150px",
-    marginBottom: "20px"
-  },
-
-  subtitle: {
-    fontSize: "14px",
-    color: "#666",
+    width: "180px", // 🔥 maior (corrigido)
     marginBottom: "25px"
   },
 
-  searchContainer: {
+  subtitle: {
+    fontSize: "16px", // 🔥 maior
+    color: "#555",
+    marginBottom: "30px",
+    fontWeight: "500"
+  },
+
+  searchWrapper: {
     width: "100%",
-    maxWidth: "400px"
+    maxWidth: "420px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center" // 🔥 GARANTE CENTRALIZAÇÃO
   },
 
   input: {
     width: "100%",
-    padding: "15px",
-    borderRadius: "25px",
+    padding: "16px",
+    borderRadius: "30px",
     border: "1px solid #ddd",
     marginBottom: "12px",
     fontSize: "15px",
-    textAlign: "center"
+    textAlign: "center",
+    boxSizing: "border-box"
   },
 
   button: {
-    width: "100%",
-    padding: "15px",
-    borderRadius: "25px",
+    width: "100%", // 🔥 agora casa perfeitamente com input
+    padding: "16px",
+    borderRadius: "30px",
     border: "none",
     backgroundColor: "#2e7d32",
     color: "#fff",
     fontWeight: "bold",
-    fontSize: "15px",
+    fontSize: "16px",
     cursor: "pointer"
   },
 
   suggestions: {
-    marginTop: "30px"
+    marginTop: "35px"
   },
 
   suggestionsTitle: {
     fontSize: "12px",
     color: "#888",
-    marginBottom: "10px"
+    marginBottom: "12px",
+    letterSpacing: "1px"
   },
 
   chips: {
@@ -137,15 +143,15 @@ const styles = {
     flexWrap: "wrap",
     justifyContent: "center",
     gap: "10px",
-    maxWidth: "400px"
+    maxWidth: "420px"
   },
 
   chip: {
-    padding: "8px 14px",
+    padding: "9px 16px",
     borderRadius: "20px",
     border: "none",
     backgroundColor: "#e8f5e9",
-    fontSize: "13px",
+    fontSize: "14px",
     cursor: "pointer"
   }
 }
