@@ -7,15 +7,15 @@ export default function handler(req, res) {
   }
 
   const respostas = {
-    ansiedade: "🌿 Chá de camomila\n🧘 Respiração\n🚶 Caminhada",
-    "dor de estomago": "🌿 Chá de hortelã\n🔥 Compressa\n🍽️ Evitar gordura"
+    ansiedade: "Cha de camomila | Respiracao | Caminhada",
+    "dor de estomago": "Cha de hortela | Compressa | Evitar gordura"
   };
 
   const chave = q.toLowerCase();
 
   const resultado =
     respostas[chave] ||
-    🌿 Ainda não temos conteúdo para "${q}";
+    Ainda nao temos conteudo para "${q}";
 
   res.status(200).json({ result: resultado });
 }
