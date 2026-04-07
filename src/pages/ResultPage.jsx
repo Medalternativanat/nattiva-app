@@ -1,70 +1,41 @@
-import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function ResultPage() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [result, setResult] = useState("Carregando...");
 
-  const params = new URLSearchParams(location.search);
-  const query = params.get("q");
-
-  const [loading, setLoading] = useState(true);
-  const [result, setResult] = useState("");
+  const query = new URLSearchParams(location.search).get("q");
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch("/api/search?q=" + query);
+        const res = await fetch(/api/search?q=${query});
         const data = await res.json();
         setResult(data.result);
-      } catch (err) {
+      } catch (error) {
         setResult("Erro ao buscar resposta.");
-      } finally {
-        setLoading(false);
       }
     }
 
-    fetchData();
+    if (query) fetchData();
   }, [query]);
 
   return (
-    <div style={{
-      padding: "20px",
-      maxWidth: "600px",
-      margin: "0 auto"
-    }}>
+    <div style={{ padding: 20 }}>
+      <button onClick={() => navigate(-1)}>← Voltar</button>
 
-      <button
-        onClick={() => navigate("/")}
-        style={{
-          marginBottom: "20px",
-          background: "none",
-          border: "none",
-          color: "#2e7d32",
-          fontWeight: "bold",
-          cursor: "pointer"
-        }}
-      >
-        ← Voltar
-      </button>
-
-      <h2 style={{
-        fontSize: "20px",
-        marginBottom: "20px"
-      }}>
-        Resultado para: <strong>{query}</strong>
-      </h2>
+      <h2>Resultado para: {query}</h2>
 
       <div style={{
-        background: "#f1f8f4",
-        padding: "20px",
-        borderRadius: "16px",
-        lineHeight: "1.6",
-        whiteSpace: "pre-line"
+        marginTop: 20,
+        padding: 20,
+        borderRadius: 10,
+        background: "#f5f5f5"
       }}>
-        {loading ? "Buscando sabedoria ancestral..." : result}
+        {result}
       </div>
-
     </div>
   );
 }
