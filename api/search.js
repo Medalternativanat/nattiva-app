@@ -1,29 +1,41 @@
 export default function handler(req, res) {
-  const q = req.query.q
+  try {
+    const { q } = req.query
 
-  if (!q) {
-    return res.status(400).json({ result: "Nenhuma busca informada." })
+    // 🔒 proteção contra undefined
+    if (!q || typeof q !== "string") {
+      return res.status(400).json({
+        result: "Busca inválida"
+      })
+    }
+
+    const query = q.toLowerCase()
+
+    let result = "Ainda não temos conteúdo para: " + q
+
+    if (query.includes("ansiedade")) {
+      result = "Chá de camomila | Respiração | Caminhada"
+    }
+
+    if (query.includes("estomago")) {
+      result = "Chá de hortelã | Gengibre | Evitar fritura"
+    }
+
+    if (query.includes("ferida")) {
+      result = "Babosa | Calêndula | Higienização adequada"
+    }
+
+    if (query.includes("camomila")) {
+      result = "Calmante natural | Ajuda no sono | Reduz ansiedade"
+    }
+
+    return res.status(200).json({ result })
+
+  } catch (error) {
+    console.error("ERRO NA API:", error)
+
+    return res.status(500).json({
+      result: "Erro interno do servidor"
+    })
   }
-
-  const chave = q.toLowerCase()
-
-  const respostas = {
-    "ansiedade": "🌿 Chá de camomila | 🧘 Respiração profunda | 🚶 Caminhada ao ar livre",
-
-    "chá de camomila": "🌼 Calmante natural poderoso\n🍵 Tomar antes de dormir\n🧠 Ajuda na ansiedade e sono",
-
-    "dor de estomago": "🌿 Chá de hortelã | 🔥 Compressa morna | ⚠️ Evitar gordura",
-
-    "dor de barriga": "🌿 Chá de erva-doce | 🥣 Alimentação leve | 🚫 Evitar leite",
-
-    "insônia": "🌙 Chá de camomila | 📵 Sem celular à noite | 🛏️ Ambiente escuro",
-
-    "ferida": "🌿 Barbatimão (lavagem) | 🧂 Água com sal | ☀️ Manter limpo e seco"
-  }
-
-  const resultado =
-    respostas[chave] ||
-    🌿 Ainda não temos conteúdo para: ${q}
-
-  res.status(200).json({ result: resultado })
 }
