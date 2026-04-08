@@ -12,14 +12,15 @@ export default function ResultPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch(`https://nattiva-app.vercel.app/api/search?q=${query}`)
-        
+        const res = await fetch(/api/search?q=${query})
+
         if (!res.ok) {
           throw new Error("Erro na API")
         }
 
         const data = await res.json()
         setResult(data.result)
+
       } catch (error) {
         setResult("Erro ao buscar resposta.")
       } finally {
@@ -34,23 +35,16 @@ export default function ResultPage() {
 
   return (
     <div style={{ padding: "40px", fontFamily: "Arial" }}>
-      <button 
-        onClick={() => navigate("/")}
-        style={{
-          marginBottom: "20px",
-          padding: "10px 15px",
-          cursor: "pointer"
-        }}
-      >
-        ← Voltar
-      </button>
+      <button onClick={() => navigate("/")}>← Voltar</button>
 
-      <h1>Resultado para: {query}</h1>
+      <h1 style={{ marginTop: "20px" }}>
+        Resultado para: {query}
+      </h1>
 
       {loading ? (
         <p>Carregando...</p>
       ) : (
-        <p>{result}</p>
+        <p style={{ marginTop: "20px" }}>{result}</p>
       )}
     </div>
   )
