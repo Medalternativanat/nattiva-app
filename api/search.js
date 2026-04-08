@@ -1,3 +1,6 @@
 export default function handler(req, res) {
-  return res.status(200).send("FUNCIONANDO AGORA");
+  return res.status(200).json({
+    ok: true,
+    msg: "API 100% viva"
+  });
 }
