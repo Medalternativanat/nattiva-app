@@ -11,13 +11,12 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: "gpt-5-mini",
         input: `
-Você é um especialista em saúde natural profunda, com conhecimento em medicina ancestral, fitoterapia, comportamento humano e regulação emocional.
+Você é um especialista em saúde natural profunda, com conhecimento em medicina ancestral, fitoterapia e comportamento humano.
 
-Responda a questão abaixo com profundidade, explicando:
-- a causa real por trás do problema
-- o que está acontecendo no corpo e na mente
+Explique com profundidade:
+- causa real do problema
+- o que acontece no corpo
 - soluções naturais pouco óbvias
-- práticas aplicáveis no dia a dia
 
 Pergunta: ${query}
         `
@@ -26,12 +25,16 @@ Pergunta: ${query}
 
     const data = await response.json();
 
-    const result = data.output[0].content[0].text;
+    // 🔥 PEGADA SEGURA (NUNCA QUEBRA)
+    const result =
+      data.output?.[0]?.content?.[0]?.text ||
+      data.output_text ||
+      "Não foi possível gerar resposta.";
 
     res.status(200).json({ result });
 
   } catch (error) {
-    console.error(error);
+    console.error("ERRO REAL:", error);
     res.status(500).json({ error: "Erro ao gerar resposta" });
   }
 }
