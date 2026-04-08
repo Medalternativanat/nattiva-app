@@ -12,7 +12,9 @@ export default function ResultPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch(/api/search?q=${query})
+        const url = "/api/search?q=" + query
+
+        const res = await fetch(url)
 
         if (!res.ok) {
           throw new Error("Erro na API")
