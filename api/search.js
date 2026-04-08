@@ -23,7 +23,6 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    // 🔥 MOSTRA TUDO NA TELA (CHAVE DO DEBUG)
     return res.status(200).json({
       status_http: response.status,
       resposta_openai: data
