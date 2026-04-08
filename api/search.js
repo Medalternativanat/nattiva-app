@@ -1,9 +1,11 @@
 export default async function handler(req, res) {
-  const query = req.query.q;
-
   try {
+    const query = req.query.q || "teste";
+
     if (!process.env.OPENAI_API_KEY) {
-      return res.status(500).json({ error: "API KEY não encontrada no ambiente" });
+      return res.status(500).json({
+        erro: "API KEY não encontrada"
+      });
     }
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -15,22 +17,23 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: "gpt-4o-mini",
         messages: [
-          { role: "system", content: "Especialista em saúde natural profunda." },
+          { role: "system", content: "Você é um especialista profundo em saúde natural." },
           { role: "user", content: query },
         ],
       }),
     });
 
-    const data = await response.json();
+    const text = await response.text(); // 👈 aqui muda tudo
 
     return res.status(200).json({
-      status_http: response.status,
-      resposta_openai: data
+      status: response.status,
+      raw: text
     });
 
-  } catch (error) {
+  } catch (err) {
     return res.status(500).json({
-      erro_real: error.message
+      erro_real: err.message,
+      stack: err.stack
     });
   }
 }
