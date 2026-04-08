@@ -1,41 +1,59 @@
-export default function handler(req, res) {
+export default async function handler(req, res) {
+  const { q } = req.query
+
+  if (!q) {
+    return res.status(400).json({ error: "Query não informada" })
+  }
+
   try {
-    const { q } = req.query
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Bearer ${process.env.OPENAI_API_KEY},
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [
+          {
+            role: "system",
+            content: `
+Você é um especialista profundo em saúde natural, fitoterapia, medicina ancestral e práticas integrativas.
 
-    // 🔒 proteção contra undefined
-    if (!q || typeof q !== "string") {
-      return res.status(400).json({
-        result: "Busca inválida"
-      })
-    }
+Seu objetivo NÃO é dar respostas genéricas.
 
-    const query = q.toLowerCase()
+Você entrega:
+- conhecimento ancestral (Ayurveda, medicina chinesa, ervas tradicionais)
+- explicação do PORQUÊ das recomendações
+- alternativas naturais menos óbvias
+- linguagem clara, mas profunda
 
-    let result = "Ainda não temos conteúdo para: " + q
+NUNCA responda com coisas superficiais como:
+"chá de camomila", "respiração", "caminhada"
 
-    if (query.includes("ansiedade")) {
-      result = "Chá de camomila | Respiração | Caminhada"
-    }
+A resposta deve parecer um guia sábio, não um blog genérico.
 
-    if (query.includes("estomago")) {
-      result = "Chá de hortelã | Gengibre | Evitar fritura"
-    }
+Formato:
+- explicação curta do problema
+- recomendações naturais específicas
+- breve explicação de cada uma
+            `,
+          },
+          {
+            role: "user",
+            content: Me dê uma orientação natural profunda para: ${q},
+          },
+        ],
+        temperature: 0.7,
+      }),
+    })
 
-    if (query.includes("ferida")) {
-      result = "Babosa | Calêndula | Higienização adequada"
-    }
+    const data = await response.json()
 
-    if (query.includes("camomila")) {
-      result = "Calmante natural | Ajuda no sono | Reduz ansiedade"
-    }
+    const result = data.choices?.[0]?.message?.content || "Sem resposta"
 
     return res.status(200).json({ result })
-
   } catch (error) {
-    console.error("ERRO NA API:", error)
-
-    return res.status(500).json({
-      result: "Erro interno do servidor"
-    })
+    return res.status(500).json({ error: "Erro ao conectar com a IA" })
   }
 }
