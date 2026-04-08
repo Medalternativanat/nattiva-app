@@ -12,7 +12,7 @@ export default function ResultPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch(https://nattiva-app.vercel.app/api/search?q=${query})
+        const res = await fetch(`https://nattiva-app.vercel.app/api/search?q=${query}`)
         
         if (!res.ok) {
           throw new Error("Erro na API")
