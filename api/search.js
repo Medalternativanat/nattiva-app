@@ -1,16 +1,11 @@
-export default async function handler(request) {
+export default async function handler(req, res) {
   try {
-    return new Response(
-      JSON.stringify({ funcionando: true }),
-      {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    return res.status(200).json({
+      funcionando: true
+    });
   } catch (err) {
-    return new Response(
-      JSON.stringify({ erro: err.message }),
-      { status: 500 }
-    );
+    return res.status(500).json({
+      erro: err.message
+    });
   }
 }
