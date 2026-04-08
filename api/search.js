@@ -14,25 +14,16 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model: "gpt-4.1-mini",
-        input: Você é um especialista em saúde natural. Responda de forma clara e confiável: ${query}
+        input: Explique de forma simples: ${query}
       }),
     });
 
     const data = await response.json();
 
-    // 🔍 segurança contra erro da API
-    if (!data.output) {
-      return res.status(500).json({
-        erro_openai: data
-      });
-    }
-
-    const resposta = data.output[0].content[0].text;
-
+    // 🔥 DEBUG TOTAL (IMPORTANTE)
     return res.status(200).json({
-      sucesso: true,
-      pergunta: query,
-      resposta
+      debug: true,
+      data_recebida: data
     });
 
   } catch (err) {
