@@ -1,33 +1,35 @@
-import OpenAI from "openai";
-
 export default async function handler(req, res) {
   try {
     const query = req.query.q || "teste";
 
-    console.log("API KEY EXISTE?", !!process.env.OPENAI_API_KEY);
+    if (!process.env.OPENAI_API_KEY) {
+      return res.status(500).json({
+        erro: "SEM_API_KEY"
+      });
+    }
 
-    const openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY
+    const response = await fetch("https://api.openai.com/v1/responses", {
+      method: "POST",
+      headers: {
+        "Authorization": Bearer ${process.env.OPENAI_API_KEY},
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "gpt-4.1-mini",
+        input: Explique de forma simples: ${query}
+      })
     });
 
-    const response = await openai.responses.create({
-      model: "gpt-4.1-mini",
-      input: Explique de forma simples: ${query}
-    });
-
-    console.log("RESPOSTA OPENAI:", JSON.stringify(response));
+    const data = await response.json();
 
     return res.status(200).json({
       ok: true,
-      resposta: response
+      resposta: data
     });
 
   } catch (err) {
-    console.error("ERRO COMPLETO:", err);
-
     return res.status(500).json({
-      erro_real: err.message,
-      stack: err.stack
+      erro_real: err.message
     });
   }
 }
