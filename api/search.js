@@ -3,7 +3,7 @@ export default async function handler(req, res) {
 
   try {
     if (!process.env.OPENAI_API_KEY) {
-      return res.status(500).json({ error: "API KEY não encontrada" });
+      return res.status(500).json({ error: "API KEY não encontrada no ambiente" });
     }
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -15,33 +15,23 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: "gpt-4o-mini",
         messages: [
-          {
-            role: "system",
-            content: "Você é um especialista em saúde natural profunda e ancestral.",
-          },
-          {
-            role: "user",
-            content: query,
-          },
+          { role: "system", content: "Especialista em saúde natural profunda." },
+          { role: "user", content: query },
         ],
       }),
     });
 
     const data = await response.json();
 
-    // 👇 ESSA LINHA VAI TE MOSTRAR O ERRO REAL
-    console.log("RESPOSTA OPENAI:", data);
-
-    if (data.error) {
-      return res.status(500).json({ error: data.error.message });
-    }
-
-    const result = data.choices?.[0]?.message?.content;
-
-    res.status(200).json({ result });
+    // 🔥 MOSTRA TUDO NA TELA (CHAVE DO DEBUG)
+    return res.status(200).json({
+      status_http: response.status,
+      resposta_openai: data
+    });
 
   } catch (error) {
-    console.error("ERRO GERAL:", error);
-    res.status(500).json({ error: "Erro geral" });
+    return res.status(500).json({
+      erro_real: error.message
+    });
   }
 }
