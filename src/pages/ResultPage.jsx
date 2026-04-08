@@ -12,9 +12,7 @@ export default function ResultPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const url = "/api/search?q=" + query
-
-        const res = await fetch(url)
+        const res = await fetch(/api/search?q=${query})
 
         if (!res.ok) {
           throw new Error("Erro na API")
@@ -36,17 +34,15 @@ export default function ResultPage() {
   }, [query])
 
   return (
-    <div style={{ padding: "40px", fontFamily: "Arial" }}>
+    <div style={{ padding: "20px" }}>
       <button onClick={() => navigate("/")}>← Voltar</button>
 
-      <h1 style={{ marginTop: "20px" }}>
-        Resultado para: {query}
-      </h1>
+      <h1>Resultado para: {query}</h1>
 
       {loading ? (
         <p>Carregando...</p>
       ) : (
-        <p style={{ marginTop: "20px" }}>{result}</p>
+        <p>{result}</p>
       )}
     </div>
   )
