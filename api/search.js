@@ -18,43 +18,22 @@ export default async function handler(req, res) {
       })
     });
 
-    // 👇 ISSO É O PONTO CRÍTICO
-    const rawText = await response.text();
+    const data = await response.json();
 
-    // 👇 TENTA PARSEAR
-    let data;
-    try {
-      data = JSON.parse(rawText);
-    } catch (e) {
-      return res.status(200).json({
-        erro: "Resposta não é JSON",
-        raw: rawText
-      });
-    }
-
-    // 👇 SE OPENAI DER ERRO, VOCÊ VAI VER
-    if (!response.ok) {
-      return res.status(200).json({
-        erro_openai: true,
-        status: response.status,
-        data: data
-      });
-    }
-
-    // 👇 EXTRAÇÃO SEGURA (NÃO QUEBRA)
     const texto =
-      data?.output?.[0]?.content?.[0]?.text ||
+      data.output?.[0]?.content?.[0]?.text ||
       "Sem resposta da IA";
 
     return res.status(200).json({
-      ok: true,
+      query: q,
       resposta: texto
     });
 
-  } catch (err) {
-    return res.status(200).json({
-      erro_servidor: true,
-      mensagem: err.message
+  } catch (error) {
+    console.error("ERRO:", error);
+    return res.status(500).json({
+      error: "Erro interno",
+      detalhe: error.message
     });
   }
 }
