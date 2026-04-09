@@ -20,18 +20,16 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    const texto =
-      data?.output?.[0]?.content?.[0]?.text ||
-      "Sem resposta da IA";
-
+    // 👇 DEBUG FORÇADO
     return res.status(200).json({
-      query: q,
-      resposta: texto
+      status: "DEBUG",
+      openai_status: response.status,
+      openai_response: data
     });
 
   } catch (error) {
     return res.status(500).json({
-      error: "Erro na API",
+      error: "ERRO GERAL",
       detalhe: error.message
     });
   }
