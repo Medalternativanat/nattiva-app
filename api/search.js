@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
   return res.status(200).json({
     ok: true,
-    step: "API funcionando 100%"
+    tem_key: !!process.env.OPENAI_API_KEY
   });
 }
