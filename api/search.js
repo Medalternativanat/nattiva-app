@@ -1,3 +1,5 @@
+import https from "https";
+
 export default async function handler(req, res) {
   try {
     const { q } = req.query;
@@ -14,37 +16,67 @@ export default async function handler(req, res) {
       });
     }
 
-    const response = await fetch("https://api.openai.com/v1/responses", {
+    const data = JSON.stringify({
+      model: "gpt-4.1-mini",
+      input: Responda de forma simples e natural sobre: ${q}
+    });
+
+    const options = {
+      hostname: "api.openai.com",
+      path: "/v1/responses",
       method: "POST",
       headers: {
         "Authorization": Bearer ${apiKey},
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: "gpt-4.1-mini",
-        input: Responda de forma simples e natural sobre: ${q}
-      })
-    });
+        "Content-Type": "application/json",
+        "Content-Length": data.length
+      }
+    };
 
-    const data = await response.json();
+    const request = https.request(options, (response) => {
+      let body = "";
 
-    // 👇 se OpenAI devolver erro, mostra tudo
-    if (!response.ok) {
-      return res.status(500).json({
-        error: "ERRO OPENAI",
-        status: response.status,
-        detalhe: data
+      response.on("data", (chunk) => {
+        body += chunk;
       });
-    }
 
-    const texto =
-      data?.output?.[0]?.content?.[0]?.text ||
-      "Sem resposta da IA";
+      response.on("end", () => {
+        try {
+          const json = JSON.parse(body);
 
-    return res.status(200).json({
-      query: q,
-      resposta: texto
+          if (response.statusCode !== 200) {
+            return res.status(500).json({
+              error: "ERRO OPENAI",
+              detalhe: json
+            });
+          }
+
+          const texto =
+            json?.output?.[0]?.content?.[0]?.text ||
+            "Sem resposta da IA";
+
+          return res.status(200).json({
+            query: q,
+            resposta: texto
+          });
+
+        } catch (e) {
+          return res.status(500).json({
+            error: "ERRO PARSE",
+            detalhe: body
+          });
+        }
+      });
     });
+
+    request.on("error", (error) => {
+      return res.status(500).json({
+        error: "ERRO REQUEST",
+        detalhe: error.message
+      });
+    });
+
+    request.write(data);
+    request.end();
 
   } catch (error) {
     return res.status(500).json({
