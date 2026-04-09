@@ -1,3 +1,7 @@
+export const config = {
+  runtime: "nodejs",
+};
+
 export default async function handler(req, res) {
   try {
     const response = await fetch("https://api.openai.com/v1/models", {
