@@ -1,11 +1,9 @@
 export default async function handler(req, res) {
   try {
-    const query = req.query.q || "teste";
+    const { q } = req.query;
 
-    if (!process.env.OPENAI_API_KEY) {
-      return res.status(500).json({
-        erro: "SEM_API_KEY"
-      });
+    if (!q) {
+      return res.status(400).json({ error: "Query vazia" });
     }
 
     const response = await fetch("https://api.openai.com/v1/responses", {
@@ -16,22 +14,25 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model: "gpt-4.1-mini",
-        input: Explique: ${query}
+        input: Responda de forma simples e natural sobre: ${q}
       })
     });
 
     const data = await response.json();
 
-    // 🔥 RETORNA TUDO PRA VER O QUE VEM
+    const texto =
+      data?.output?.[0]?.content?.[0]?.text ||
+      "Sem resposta da IA";
+
     return res.status(200).json({
-      status_http: response.status,
-      data_completa: data
+      query: q,
+      resposta: texto
     });
 
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({
-      erro_real: err.message,
-      stack: err.stack
+      error: "Erro na API",
+      detalhe: error.message
     });
   }
 }
