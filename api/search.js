@@ -16,24 +16,22 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model: "gpt-4.1-mini",
-        input: Explique de forma simples sobre: ${query}
+        input: Explique: ${query}
       })
     });
 
     const data = await response.json();
 
-    // 🔥 PROTEÇÃO ANTI-CRASH
-    const texto =
-      data?.output?.[0]?.content?.[0]?.text ||
-      "Sem resposta da IA";
-
+    // 🔥 RETORNA TUDO PRA VER O QUE VEM
     return res.status(200).json({
-      resposta: texto
+      status_http: response.status,
+      data_completa: data
     });
 
   } catch (err) {
     return res.status(500).json({
-      erro_real: err.message
+      erro_real: err.message,
+      stack: err.stack
     });
   }
 }
