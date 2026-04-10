@@ -3,43 +3,48 @@ import https from "https";
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+app.get("/api/test", async (req, res) => {
+  try {
+    const options = {
+      hostname: "api.openai.com",
+      path: "/v1/models",
+      method: "GET",
+      headers: {
+        Authorization: Bearer ${process.env.OPENAI_API_KEY},
+      },
+    };
 
-app.get("/", (req, res) => {
-  res.send("Servidor rodando 🚀");
-});
+    const request = https.request(options, (response) => {
+      let data = "";
 
-app.get("/api/test", (req, res) => {
-  const options = {
-    hostname: "api.openai.com",
-    path: "/v1/models",
-    method: "GET",
-    headers: {
-      Authorization: Bearer ${process.env.OPENAI_API_KEY},
-    },
-  };
+      response.on("data", (chunk) => {
+        data += chunk;
+      });
 
-  const request = https.request(options, (response) => {
-    let data = "";
-
-    response.on("data", (chunk) => {
-      data += chunk;
+      response.on("end", () => {
+        res.status(200).json({
+          status: "OK",
+          resposta: JSON.parse(data),
+        });
+      });
     });
 
-    response.on("end", () => {
-      res.status(200).send(data);
+    request.on("error", (error) => {
+      res.status(500).json({
+        erro: error.message,
+      });
     });
-  });
 
-  request.on("error", (error) => {
+    request.end();
+  } catch (error) {
     res.status(500).json({
       erro: error.message,
     });
-  });
-
-  request.end();
+  }
 });
 
+const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
-  console.log(Servidor rodando na porta ${PORT});
+  console.log("Servidor rodando na porta " + PORT);
 });
