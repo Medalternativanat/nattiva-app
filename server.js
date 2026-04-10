@@ -9,44 +9,35 @@ app.get("/", (req, res) => {
   res.send("Servidor rodando 🚀");
 });
 
-app.get("/api/test", async (req, res) => {
-  try {
-    const options = {
-      hostname: "api.openai.com",
-      path: "/v1/models",
-      method: "GET",
-      headers: {
-        Authorization: Bearer ${process.env.OPENAI_API_KEY},
-      },
-    };
+app.get("/api/test", (req, res) => {
+  const options = {
+    hostname: "api.openai.com",
+    path: "/v1/models",
+    method: "GET",
+    headers: {
+      Authorization: Bearer ${process.env.OPENAI_API_KEY},
+    },
+  };
 
-    const request = https.request(options, (response) => {
-      let data = "";
+  const request = https.request(options, (response) => {
+    let data = "";
 
-      response.on("data", (chunk) => {
-        data += chunk;
-      });
-
-      response.on("end", () => {
-        res.status(200).json({
-          status: "OK",
-          resposta: data,
-        });
-      });
+    response.on("data", (chunk) => {
+      data += chunk;
     });
 
-    request.on("error", (error) => {
-      res.status(500).json({
-        erro: error.message,
-      });
+    response.on("end", () => {
+      res.status(200).send(data);
     });
+  });
 
-    request.end();
-  } catch (error) {
+  request.on("error", (error) => {
     res.status(500).json({
       erro: error.message,
     });
-  }
+  });
+
+  request.end();
 });
 
 app.listen(PORT, () => {
