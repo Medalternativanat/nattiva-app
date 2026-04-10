@@ -10,7 +10,7 @@ app.get("/api/test", async (req, res) => {
       path: "/v1/models",
       method: "GET",
       headers: {
-        Authorization: Bearer ${process.env.OPENAI_API_KEY},
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
       },
     };
 
