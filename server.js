@@ -1,6 +1,8 @@
 import http from "http";
 import https from "https";
 
+const PORT = process.env.PORT;
+
 const server = http.createServer((req, res) => {
   if (req.url === "/api") {
     const options = {
@@ -33,12 +35,10 @@ const server = http.createServer((req, res) => {
     request.end();
   } else {
     res.writeHead(200);
-    res.end("Servidor rodando 🚀");
+    res.end("OK");
   }
 });
 
-const PORT = process.env.PORT || 3000;
-
-server.listen(PORT, () => {
+server.listen(PORT, "0.0.0.0", () => {
   console.log("Servidor rodando na porta " + PORT);
 });
