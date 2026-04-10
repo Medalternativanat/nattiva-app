@@ -30,7 +30,7 @@ app.get("/api/test", async (req, res) => {
       response.on("end", () => {
         res.status(200).json({
           status: "OK",
-          resposta: JSON.parse(data),
+          resposta: data,
         });
       });
     });
