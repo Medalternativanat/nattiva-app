@@ -6,11 +6,12 @@ export default async function handler(req, res) {
       },
     });
 
-    const text = await response.text();
+    const raw = await response.text();
 
     return res.status(200).json({
-      etapa: "PASSO 3 OK",
-      resposta: text
+      etapa: "PASSO 4",
+      status: response.status,
+      resposta: raw
     });
 
   } catch (error) {
