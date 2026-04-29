@@ -1,18 +1,18 @@
-const express = require("express");
+import express from "express";
 
 const app = express();
 
+// ⚠️ ESSA LINHA É A MAIS IMPORTANTE
+const PORT = process.env.PORT || 3000;
+
 app.get("/", (req, res) => {
-  res.send("OK");
+  res.send("Servidor funcionando 🚀");
 });
 
 app.get("/api/test", (req, res) => {
-  res.json({ message: "API funcionando" });
+  res.json({ ok: true });
 });
 
-// ⚠️ AQUI É O PONTO CRÍTICO
-const PORT = process.env.PORT;
-
-app.listen(PORT, "0.0.0.0", () => {
-  console.log("Servidor rodando na porta " + PORT);
+app.listen(PORT, () => {
+  console.log(Servidor rodando na porta ${PORT});
 });
