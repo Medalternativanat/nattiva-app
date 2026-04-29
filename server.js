@@ -10,7 +10,8 @@ app.get("/api/test", (req, res) => {
   res.json({ message: "API funcionando" });
 });
 
-const PORT = process.env.PORT || 3000;
+// ⚠️ AQUI É O PONTO CRÍTICO
+const PORT = process.env.PORT;
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log("Servidor rodando na porta " + PORT);
